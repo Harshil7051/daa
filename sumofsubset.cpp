@@ -1,40 +1,32 @@
 #include <iostream>
-#include<vector>
+#include <vector>
+
 using namespace std;
-bool flag = 0;
-void PrintSubsetSum(int i, int n, int set[], int targetSum, vector<int>& subset)
-{
-if (targetSum == 0) {
-flag = 1;
-cout << "[ ";
-for (int i = 0; i < subset.size(); i++) {
-cout << subset[i] << " ";
+
+void subsetSum(vector<int>& nums, int targetSum, vector<int>& subset, int index) {
+    if (targetSum == 0) {
+        for (int num : subset)
+            cout << num << " ";
+        cout << endl;
+        return;
+    }
+
+    if (index >= nums.size() || targetSum < 0)
+        return;
+
+    subset.push_back(nums[index]);
+    subsetSum(nums, targetSum - nums[index], subset, index + 1);
+
+    subset.pop_back();
+    subsetSum(nums, targetSum, subset, index + 1);
 }
-cout << "]";
-return;
-}
-if (i == n) {
-return;
-}
-PrintSubsetSum(i + 1, n, set, targetSum, subset);
-if (set[i] <= targetSum) {
-subset.push_back(set[i]);
-PrintSubsetSum(i + 1, n, set, targetSum - set[i], subset);
-subset.pop_back();
-}
-}
-int main()
-{
-int set[] = { 1, 2, 1 };
-int sum = 3;
-int n = sizeof(set) / sizeof(set[0]);
-vector<int> subset;
-cout << "Output :" << endl;
-PrintSubsetSum(0, n, set, sum, subset);
-cout << endl;
-flag = 0;
-if (!flag) {
-cout << "There is no such subset";
-}
-return 0;
+
+int main() {
+    vector<int> nums = {2, 4, 6, 8, 10};
+    int targetSum = 10;
+    vector<int> subset;
+
+    subsetSum(nums, targetSum, subset, 0);
+
+    return 0;
 }
