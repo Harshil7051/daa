@@ -5,7 +5,7 @@ using namespace std;
 
 void subsetSum(vector<int>& nums, int targetSum, vector<int>& subset, int index) {
     if (targetSum == 0) {
-        for (int num : subset)
+        for (int num = 0 ; num < subset.size() ; num++)
             cout << num << " ";
         cout << endl;
         return;
